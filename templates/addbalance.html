@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    :root {
+  --clr-primary-100: #3399FF;
+  --clr-primary-200: #007FFF;
+  --clr-primary-300: #0059B3;
+  --clr-primary-400: #003F80;
+  --clr-primary-500: #002952;
+  
+  --clr-neutral-100: #ffffff;
+  --clr-neutral-200: #e6eaef;
+  --clr-neutral-300: #c1cbd7;
+  --clr-neutral-400: #778da6;
+  --clr-neutral-500: #495b6f;
+  --clr-neutral-600: #384656;
+  --clr-neutral-700: #28323e;
+  --clr-neutral-800: #1c232b;
+  --clr-neutral-900: #101419;
+}
+
+* { box-sizing: border-box }
+
+body,
+h1, h2, h3,
+p {
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--clr-neutral-900);
+  color: var(--clr-neutral-100);
+  overflow-x: hidden;
+  padding-block: 2rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  width: 100%;
+}
+
+.form {
+  display: grid;
+  gap: 0.5rem;
+  
+  width: calc(100% - 1rem);
+  max-width: 20rem;
+  
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background-color: var(--clr-neutral-800);
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.form::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--clr-primary-500);
+  border-radius: 0.25rem;
+  z-index: -1;
+  transition: 300ms ease;
+}
+
+.form:hover::before {
+  border-color: var(--clr-primary-400);
+}
+
+.form__title {
+  text-align: center;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+}
+
+.form-group {
+  width: 100%;
+  display: grid;
+  gap: 0.15em;
+}
+
+input {
+  color-scheme: dark;
+  padding: 0.15em 0.5em;
+  background-color: var(--clr-neutral-700);
+  border: 1px solid var(--clr-neutral-600);
+  border-radius: 0.15em;
+}
+
+button {
+  margin-top: 0.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr-neutral-800);
+  border: 1px solid var(--clr-neutral-600);
+  padding: 0.15em 0.5em;
+  border-radius: 0.15em;
+  cursor: pointer;
+  color: var(--clr-neutral-100);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: 300ms ease;
+}
+
+button:is(:hover, :focus-visible) {
+  background-color: var(--clr-neutral-700);
+}
+
+
+/* Blob Effect - https://codepen.io/Hyperplexed/pen/vYzgeYE */
+#blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 25vmax;
+  aspect-ratio: 1;
+  background: linear-gradient(to right, var(--clr-primary-400), var(--clr-primary-500));
+  border-radius: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(12vmax);
+  animation: rotate 20s infinite;
+}
+
+@keyframes rotate {
+  from { rotate: 0deg   }
+  50%  { scale:  1 1.5  }
+  to   { rotate: 360deg }
+}
+</style>
+
+<body>
+  {% if user.is_authenticated %}
+    <form id="form" class="form" action="/addbalance/" method="post" autocomplete="off">
+        {% csrf_token %}
+    <h3 class="form__title">Add Balance </h3>
+    <h3 class="form__title">Current Balance: {{muser}} </h3>
+    <div class="form-group">
+        <input type="text" name="balance" id="balance" placeholder="Add balance" required>
+    </div>
+    <button type="submit">Add</button>
+  </form>
+  
+  <div id="blob"></div>
+  {% else %}
+  <h3 class="form__title">Restricted</h3>
+  <a href="/"><button type="submit">Go To HomePage</button></a>
+  {% endif %}
+</body>
+</html>

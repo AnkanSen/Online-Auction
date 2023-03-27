@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</head>
+
+<style>
+    :root {
+  --clr-primary-100: #3399FF;
+  --clr-primary-200: #007FFF;
+  --clr-primary-300: #0059B3;
+  --clr-primary-400: #003F80;
+  --clr-primary-500: #002952;
+  
+  --clr-neutral-100: #ffffff;
+  --clr-neutral-200: #e6eaef;
+  --clr-neutral-300: #c1cbd7;
+  --clr-neutral-400: #778da6;
+  --clr-neutral-500: #495b6f;
+  --clr-neutral-600: #384656;
+  --clr-neutral-700: #28323e;
+  --clr-neutral-800: #1c232b;
+  --clr-neutral-900: #101419;
+}
+
+* { box-sizing: border-box }
+
+body,
+h1, h2, h3,
+p {
+  margin: 0;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  
+  font-family: 'Rubik', sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  background-color: var(--clr-neutral-900);
+  color: var(--clr-neutral-100);
+  overflow-x: hidden;
+  padding-block: 2rem;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  width: 100%;
+}
+
+.form {
+  display: grid;
+  gap: 0.5rem;
+  
+  width: calc(100% - 1rem);
+  max-width: 20rem;
+  
+  margin-inline: auto;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background-color: var(--clr-neutral-800);
+  border-radius: 0.25rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.form::before {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--clr-primary-500);
+  border-radius: 0.25rem;
+  z-index: -1;
+  transition: 300ms ease;
+}
+
+.form:hover::before {
+  border-color: var(--clr-primary-400);
+}
+
+.form__title {
+  text-align: center;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+}
+
+.form-group {
+  width: 100%;
+  display: grid;
+  gap: 0.15em;
+}
+
+input {
+  color-scheme: dark;
+  padding: 0.15em 0.5em;
+  background-color: var(--clr-neutral-700);
+  border: 1px solid var(--clr-neutral-600);
+  border-radius: 0.15em;
+}
+
+button {
+  margin-top: 0.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr-neutral-800);
+  border: 1px solid var(--clr-neutral-600);
+  padding: 0.15em 0.5em;
+  border-radius: 0.15em;
+  cursor: pointer;
+  color: var(--clr-neutral-100);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: 300ms ease;
+}
+
+button:is(:hover, :focus-visible) {
+  background-color: var(--clr-neutral-700);
+}
+
+
+/* Blob Effect - https://codepen.io/Hyperplexed/pen/vYzgeYE */
+#blob {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 25vmax;
+  aspect-ratio: 1;
+  background: linear-gradient(to right, var(--clr-primary-400), var(--clr-primary-500));
+  border-radius: 50%;
+  translate: -50% -50%;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(12vmax);
+  animation: rotate 20s infinite;
+}
+
+@keyframes rotate {
+  from { rotate: 0deg   }
+  50%  { scale:  1 1.5  }
+  to   { rotate: 360deg }
+}
+</style>
+
+
+
+<body>
+
+    {% for message in messages %}
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Message!</strong> {{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+
+
+    <form id="form" class="form" action="/sell/" enctype="multipart/form-data"  method="post" autocomplete="off">
+            {% csrf_token %}
+        <h3 class="form__title">Sell Here</h3>
+        <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter the Name of the product" required>
+        </div>
+        <div class="form-group">
+            <label for="">Price</label>
+            <input type="number" name="price" id="price" placeholder="Tell the Minimum price" required>
+        </div>
+        <div class="form-group">
+            <label for="">Description</label>
+            <input type="text" name="cat" id="cat" placeholder="Description" required>
+        </div>
+        <div class="form-group">
+            <label for="lastd">Last Biding Date:</label>
+        <input type="date" id="lastd" name="lastd" required>
+        </div>
+        <div class="form-group">
+          <label for="lastd">Image of Product</label>
+      <input type="file" id="images" name="images" accept="image/*" required>
+      </div>
+        <button type="submit">Submit</button>
+      </form>
+      
+      <div id="blob"></div>
+</body>
+</html>
